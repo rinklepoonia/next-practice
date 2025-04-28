@@ -1,3 +1,4 @@
+"use client"
 import { CONTACT_METHOD_DATA_LIST } from '@/utils/helper'
 import React, { useState } from 'react'
 

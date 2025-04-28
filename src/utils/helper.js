@@ -13,3 +13,30 @@ export const CONTACT_METHOD_DATA_LIST = [
         { id: 'sms', label: 'SMS' },
         { id: 'both', label: 'Both' }
 ]
+ export const OVERFLOW_SWIPER_DATA_LIST = [
+         { image: "/assets/images/png/slider1.jpg" },
+          {image:"/assets/images/png/slider1.jpg"} ,
+           {image:"/assets/images/png/slider1.jpg"} ,
+            {image:"/assets/images/png/slider1.jpg"} ,
+         { image: "/assets/images/png/slider1.jpg" },
+         { image: "/assets/images/png/slider1.jpg" },
+              
+          {image:"/assets/images/png/slider1.jpg"} ,
+          
+]
+
+export const TRUST_LIST = [
+{img:"/assets/images/png/slider1.jpg"},
+        { img: "/assets/images/png/slider1.jpg" },
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+{img:"/assets/images/png/slider1.jpg"},
+]

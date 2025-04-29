@@ -35,16 +35,26 @@ export default function CardList() {
         { id: 29, title: 'Card 29', subtitle: 'Subtitle 29' },
         { id: 30, title: 'Card 30', subtitle: 'Subtitle 30' },
         { id: 31, title: 'Card 31', subtitle: 'Subtitle 31' },
+        { id: 32, title: 'Card 32', subtitle: 'Subtitle 32' },
+        { id: 33, title: 'Card 33', subtitle: 'Subtitle 33' },
+        { id: 34, title: 'Card 34', subtitle: 'Subtitle 34' },
+        { id: 35, title: 'Card 35', subtitle: 'Subtitle 35' },
+        { id: 36, title: 'Card 36', subtitle: 'Subtitle 36' },
+        { id: 37, title: 'Card 37', subtitle: 'Subtitle 37' },
+        { id: 38, title: 'Card 38', subtitle: 'Subtitle 38' },
+        { id: 39, title: 'Card 39', subtitle: 'Subtitle 39' },
+        { id: 40, title: 'Card 40', subtitle: 'Subtitle 40' },
     ];
 
     const [visibleCards, setVisibleCards] = useState(fullData.slice(0, 6));
     const [seeMoreData, setSeeMoreData] = useState(fullData.slice(6, 12));
+    const [remainingCards, setRemainingCards] = useState(fullData.slice(6));
 
     const handleShowMore = () => {
         const nextCards = fullData.slice(visibleCards.length, visibleCards.length + 6);
         setVisibleCards((prev) => [...prev, ...nextCards]);
 
-        const updatedSeeMoreData = fullData.slice(visibleCards.length + 6, visibleCards.length + 12);  // Update the next 6 cards after current visible ones
+        const updatedSeeMoreData = fullData.slice(visibleCards.length + 6, visibleCards.length + 12);  
         setSeeMoreData(updatedSeeMoreData);
     };
 
@@ -55,10 +65,17 @@ export default function CardList() {
     useEffect(() => {
         console.log("Updated visibleCards:", visibleCards);
     }, [visibleCards]);
-
+    useEffect(() => {
+        const updatedRemaining = fullData.slice(visibleCards.length);
+        setRemainingCards(updatedRemaining);
+    }, [visibleCards]);
     return (
         <div className="flex flex-col items-center p-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <h1 className="text-2xl font-bold">Total Cards: {fullData.length}</h1>
+            <h2 className="text-xl">Visible Cards: {visibleCards.length}</h2>
+            <h2 className="text-xl">Remaining Cards: {remainingCards.length}</h2>
+            <h2 className="text-xl">cards in showMore: {seeMoreData.length}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-20">
                 {visibleCards.map((card) => (
                     <div
                         key={card.id}

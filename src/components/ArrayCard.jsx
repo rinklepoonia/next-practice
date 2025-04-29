@@ -1,5 +1,7 @@
 'use client';
 
+import { useSearchParams, useRouter } from 'next/navigation';
+// import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 export default function CardList() {
@@ -45,36 +47,66 @@ export default function CardList() {
         { id: 39, title: 'Card 39', subtitle: 'Subtitle 39' },
         { id: 40, title: 'Card 40', subtitle: 'Subtitle 40' },
     ];
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const initialLimit = Math.min(parseInt(searchParams.get("limit") || "6", 10), fullData.length);
 
-    const [visibleCards, setVisibleCards] = useState(fullData.slice(0, 6));
-    const [seeMoreData, setSeeMoreData] = useState(fullData.slice(6, 12));
-    const [remainingCards, setRemainingCards] = useState(fullData.slice(6));
+    const [visibleCards, setVisibleCards] = useState(fullData.slice(0, initialLimit));
+    const [seeMoreData, setSeeMoreData] = useState(fullData.slice(initialLimit));
+    const [remainingCards, setRemainingCards] = useState(fullData.slice(initialLimit, initialLimit + 6));
+
 
     const handleShowMore = () => {
         const nextCards = fullData.slice(visibleCards.length, visibleCards.length + 6);
-        setVisibleCards((prev) => [...prev, ...nextCards]);
+        const updatedVisibleCards = [...visibleCards, ...nextCards];
+        setVisibleCards(updatedVisibleCards);
 
-        const updatedSeeMoreData = fullData.slice(visibleCards.length + 6, visibleCards.length + 12);  
-        setSeeMoreData(updatedSeeMoreData);
+        const params = new URLSearchParams(searchParams);
+        params.set('limit', updatedVisibleCards.length.toString());
+        router.replace(`?${params.toString()}`, { scroll: false });
     };
 
-    useEffect(() => {
-        console.log("Updated seeMoreData:", seeMoreData);
-    }, [seeMoreData]);
+    const handleShowLess = () => {
+        const newLimit = Math.max(6, visibleCards.length - 6);
+        const updatedVisibleCards = fullData.slice(0, newLimit);
+        setVisibleCards(updatedVisibleCards);
 
-    useEffect(() => {
-        console.log("Updated visibleCards:", visibleCards);
-    }, [visibleCards]);
+        const params = new URLSearchParams(searchParams);
+        params.set('limit', newLimit.toString());
+        router.replace(`?${params.toString()}`, { scroll: false });
+    };
+
     useEffect(() => {
         const updatedRemaining = fullData.slice(visibleCards.length);
         setRemainingCards(updatedRemaining);
     }, [visibleCards]);
+    useEffect(() => {
+        const updatedSeeMoreData = fullData.slice(visibleCards.length, visibleCards.length + 6);
+        setSeeMoreData(updatedSeeMoreData);
+    }, [visibleCards]);
+    // useEffect(() => {
+    //     console.log("Updated seeMoreData:", seeMoreData);
+    // }, [seeMoreData]);
+
+    // useEffect(() => {
+    //     console.log("Updated visibleCards:", visibleCards);
+    // }, [visibleCards]);
     return (
         <div className="flex flex-col items-center p-8">
-            <h1 className="text-2xl font-bold">Total Cards: {fullData.length}</h1>
+            <h1 className="text-2xl font-bold mb-4">Total Cards: {fullData.length}</h1>
             <h2 className="text-xl">Visible Cards: {visibleCards.length}</h2>
+            <p className="text-gray-500 mb-4">
+                ID: {visibleCards.map(card => card.id).join(", ")}
+            </p>
             <h2 className="text-xl">Remaining Cards: {remainingCards.length}</h2>
+            <p className="text-gray-500 mb-4">
+                ID: {remainingCards.map(card => card.id).join(", ")}
+            </p>
             <h2 className="text-xl">cards in showMore: {seeMoreData.length}</h2>
+            <p className="text-gray-500 mb-4">
+                ID: {seeMoreData.map(card => card.id).join(", ")}
+            </p>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-20">
                 {visibleCards.map((card) => (
                     <div
@@ -87,12 +119,24 @@ export default function CardList() {
                 ))}
             </div>
 
-            <button
-                onClick={handleShowMore}
-                className="mt-10 px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition"
-            >
-                {visibleCards.length < fullData.length ? "Show More" : "No More Cards"}
-            </button>
+            <div className="mt-10 flex gap-4">
+                {visibleCards.length < fullData.length && (
+                    <button
+                        onClick={handleShowMore}
+                        className="px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition"
+                    >
+                        Show More
+                    </button>
+                )}
+                {visibleCards.length > 6 && (
+                    <button
+                        onClick={handleShowLess}
+                        className="px-8 py-3 bg-gray-400 text-white rounded-full hover:bg-gray-500 transition"
+                    >
+                        Show Less
+                    </button>
+                )}
+            </div>
         </div>
     );
 }

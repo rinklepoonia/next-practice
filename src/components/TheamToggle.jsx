@@ -1,40 +1,32 @@
-"use client"
-import React, { useState, useEffect } from "react";
-import Icons from "./common/Icons";
 
-const TheamToggle = () => {
-    const [theme, setTheme] = useState(() =>
-        localStorage.getItem("theme") || "light"
-    );
+// const searchParams = useSearchParams();
+// const router = useRouter();
+// const perPage = 6;
 
-    useEffect(() => {
-        if (theme === "dark") {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
-        localStorage.setItem("theme", theme);
-    }, [theme]);
+// const initialPage = parseInt(searchParams.get("page") || "1", 10);
+// const [page, setPage] = useState(initialPage);
 
-    const toggleTheme = () => {
-        setTheme((prev) => (prev === "light" ? "dark" : "light"));
-    };
+// const updateURL = (newPage: number) => {
+//     const params = new URLSearchParams(searchParams.toString());
+//     params.set("page", newPage.toString());
+//     router.replace(?${ params.toString() });
+// };
 
-    return (
-        <div className=" min-h-screen bg-gray-100 dark:bg-gray-900">
-            <div className="flex items-center justify-center">
-                <button
-                    onClick={toggleTheme}
-                    className="flex items-center gap-2 p-3 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-full shadow-lg transition"
-                >
-                    {theme === "light" ? <Icons icon="moon"/> : <Icons icon="sun" />}
-                    <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
-                </button>
-            </div>
-            <p className="dark:text-white text-black">change color</p>
-            <h1 className="dark:text-red-400 text-green-900">heading color</h1>
-        </div>
-    );
-};
+// const displayedCards = cardData.slice(0, page * perPage);
+// const moreData = cardData.slice(page * perPage, (page + 1) * perPage);
 
-export default TheamToggle;
+// const loadMoreCards = () => {
+//     const newPage = page + 1;
+//     setPage(newPage);
+//     updateURL(newPage);
+// };
+
+// const seeLessCards = () => {
+//     const newPage = Math.max(page - 1, 1);
+//     setPage(newPage);
+//     updateURL(newPage);
+// };
+
+// useEffect(() => {
+//     updateURL(page);
+// }, [page]);

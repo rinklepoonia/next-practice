@@ -1,3 +1,4 @@
+import ActivePizzaASlider from "@/components/ActivePizzaASlider";
 import ArrayCard from "@/components/ArrayCard";
 import ContinueSwiper from "@/components/ContinueSwiper";
 import Dropdown from "@/components/Dropdown";
@@ -10,15 +11,16 @@ import { Suspense } from "react";
 export default function Home() {
   return (
     <div className="">
-      <Suspense>
+      {/* <Suspense>
         <ArrayCard />
-      </Suspense>
+      </Suspense> */}
 
-      {/* <Dropdown/> */}
-      {/* <TheamToggle/>
-      <Tabs />
-      <OverflowSwiper />
-      <ContinueSwiper/> */}
+      <Dropdown />
+      {/* <TheamToggle /> */}
+      <Tabs /> 
+     <OverflowSwiper />
+      <ContinueSwiper />
+      {/* <ActivePizzaASlider/> */}
     </div>
   );
 }
